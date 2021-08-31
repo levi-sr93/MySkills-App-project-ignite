@@ -1,11 +1,10 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   SafeAreaView,
   Text,
   StyleSheet,
   TextInput,
   Platform,
-  ScrollView,
   FlatList,
 } from 'react-native';
 
@@ -15,16 +14,29 @@ import {SkillCard} from '../components/SkillCard';
 export function Home() {
   const [newSkill, setNewSkill] = useState('');
   const [skillsList, setSkillsList] = useState([]);
+  const [greeting, setGretting] = useState('');
 
   function handleAddNewSkill() {
     setSkillsList(prevState => [...prevState, newSkill]);
     setNewSkill('');
   }
 
+  useEffect(() => {
+    const currentHour = new Date().getHours();
+
+    if (currentHour < 12) {
+      setGretting('Good Morning');
+    } else if (currentHour >= 12 && currentHour < 18) {
+      setGretting('Good Afternoon');
+    } else {
+      setGretting('Good Evening');
+    }
+  }, []);
+
   return (
     <>
       <SafeAreaView style={styles.container}>
-        <Text style={styles.title}>Hello Universe !</Text>
+        <Text style={[styles.title, styles.greetings]}>{greeting}, Levi</Text>
 
         <TextInput
           placeholder="new skill"
@@ -70,5 +82,8 @@ const styles = StyleSheet.create({
     marginTop: 30,
     borderRadius: 5,
     marginBottom: 20,
+  },
+  greetings: {
+    color: '#fff',
   },
 });
