@@ -11,13 +11,24 @@ import {
 import {Button} from '../components/Button';
 import {SkillCard} from '../components/SkillCard';
 
+interface ISkillData {
+  id: string;
+  name: string;
+}
+
 export function Home() {
-  const [newSkill, setNewSkill] = useState('');
-  const [skillsList, setSkillsList] = useState([]);
-  const [greeting, setGretting] = useState('');
+  const [newSkill, setNewSkill] = useState<string>('');
+  const [skillsList, setSkillsList] = useState<ISkillData[]>([]);
+  const [greeting, setGretting] = useState<string>('');
 
   function handleAddNewSkill() {
-    setSkillsList(prevState => [...prevState, newSkill]);
+
+    const skillData:ISkillData = {
+      id: String(new Date().getTime()),
+      name: newSkill,
+    }
+    
+    setSkillsList(prevState => [...prevState, skillData]);
     setNewSkill('');
   }
 
@@ -54,8 +65,8 @@ export function Home() {
 
         <FlatList
           data={skillsList}
-          keyExtractor={item => item}
-          renderItem={({item}) => <SkillCard skill={item} />}
+          keyExtractor={item => item.id}
+          renderItem={({item}) => <SkillCard skill={item.name} />}
         />
       </SafeAreaView>
     </>
