@@ -5,9 +5,11 @@ import {
   StyleSheet,
   TextInput,
   Platform,
-  TouchableOpacity,
   ScrollView,
 } from 'react-native';
+
+import {Button} from '../components/Button';
+import {SkillCard} from '../components/SkillCard';
 
 export function Home() {
   const [newSkill, setNewSkill] = useState('');
@@ -31,12 +33,7 @@ export function Home() {
           onChangeText={setNewSkill}
         />
 
-        <TouchableOpacity
-          style={styles.button}
-          activeOpacity={0.7}
-          onPress={handleAddNewSkill}>
-          <Text style={styles.buttonText}>Add</Text>
-        </TouchableOpacity>
+        <Button handleAddNewSkill={handleAddNewSkill} />
 
         <Text style={[styles.title, {marginTop: 50, marginVertical: 50}]}>
           My Skills
@@ -44,9 +41,7 @@ export function Home() {
 
         <ScrollView>
           {skillsList.map(skill => (
-            <Text key={skill} style={styles.skill}>
-              {skill}
-            </Text>
+            <SkillCard key={skill} skill={skill} />
           ))}
         </ScrollView>
       </SafeAreaView>
@@ -74,23 +69,5 @@ const styles = StyleSheet.create({
     marginTop: 30,
     borderRadius: 5,
     marginBottom: 20,
-  },
-  button: {
-    backgroundColor: '#a370f7',
-    padding: 15,
-    borderRadius: 5,
-    alignItems: 'center',
-  },
-  buttonText: {
-    color: '#fff',
-    fontSize: 17,
-    fontWeight: 'bold',
-  },
-  skill: {
-    color: '#fff',
-    backgroundColor: '#1f1e25',
-    padding: 20,
-    marginVertical: 10,
-    textAlign: 'center',
   },
 });
