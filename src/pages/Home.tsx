@@ -32,6 +32,10 @@ export function Home() {
     setNewSkill('');
   }
 
+  function handleRemoveSkill(id: string) {
+    setSkillsList((oldState => oldState.filter((skill) => skill.id !== id)))
+  }
+
   useEffect(() => {
     const currentHour = new Date().getHours();
 
@@ -58,7 +62,7 @@ export function Home() {
         />
 
         <Button 
-          activeOpacity={0.7}
+          title="New"
           onPress={handleAddNewSkill}
         
         />
@@ -71,7 +75,7 @@ export function Home() {
         <FlatList
           data={skillsList}
           keyExtractor={item => item.id}
-          renderItem={({item}) => <SkillCard skill={item.name} />}
+          renderItem={({item}) => <SkillCard skill={item.name} onPress={() => handleRemoveSkill(item.id)} />}
         />
       </SafeAreaView>
     </>
